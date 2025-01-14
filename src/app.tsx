@@ -1,43 +1,46 @@
-import { useState } from 'preact/hooks'
-import preactLogo from './assets/preact.svg'
-import viteLogo from '/vite.svg'
-import './app.css'
+import { ExifViewer } from './components/ExifViewer';
+import { FileUploader } from './components/FileUploader';
+import { BackgroundBlur } from './components/common/BackgroundBlur';
+import 'virtual:uno.css';
 
-export function App() {
-  const [count, setCount] = useState(0)
-
+export const App = () => {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} class="logo" alt="Vite logo" />
-        </a>
-        <a href="https://preactjs.com" target="_blank">
-          <img src={preactLogo} class="logo preact" alt="Preact logo" />
-        </a>
+    <div class="flex flex-col p-4 md:p-8">
+      <BackgroundBlur />
+
+      <div class="relative mx-auto max-w-3xl w-full">
+        <header class="mb-8 text-center">
+          <h1 class="mb-2 text-3xl font-medium text-gray-900 md:text-4xl">
+            Snap Scope
+          </h1>
+          <p class="text-gray-600">
+            찰칵! 찰칵! 당신의 촬영 패턴을 알려드려요{' '}
+            <i class="i-twemoji-camera-with-flash align-top" />
+          </p>
+        </header>
+
+        <main class="space-y-10 mb-12">
+          <FileUploader />
+          <ExifViewer />
+        </main>
       </div>
-      <h1>Vite + Preact</h1>
-      <div class="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+
+      <footer class="relative space-y-2 text-center text-sm text-gray-500">
+        <p>© 2024 Snap Scope. All rights reserved.</p>
         <p>
-          Edit <code>src/app.tsx</code> and save to test HMR
+          이미지와 이미지에서 추출하는 모든 데이터는 그 어떤 곳에도 전송하지
+          않습니다.
         </p>
-      </div>
-      <p>
-        Check out{' '}
-        <a
-          href="https://preactjs.com/guide/v10/getting-started#create-a-vite-powered-preact-app"
-          target="_blank"
-        >
-          create-preact
-        </a>
-        , the official Preact + Vite starter
-      </p>
-      <p class="read-the-docs">
-        Click on the Vite and Preact logos to learn more
-      </p>
-    </>
-  )
-}
+        <p class="space-x-1">
+          <a
+            href="https://github.com/Gumball12/snap-scope/"
+            target="_blank"
+            class="underline"
+          >
+            GitHub
+          </a>
+        </p>
+      </footer>
+    </div>
+  );
+};

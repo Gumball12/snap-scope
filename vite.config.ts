@@ -1,7 +1,13 @@
-import { defineConfig } from 'vite'
-import preact from '@preact/preset-vite'
+import preact from '@preact/preset-vite';
+import presetWind from '@unocss/preset-wind';
+import UnoCSS from 'unocss/vite';
+import { defineConfig } from 'vite';
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [preact()],
-})
+  plugins: [
+    UnoCSS({
+      presets: [presetWind()],
+    }),
+    preact(),
+  ],
+});

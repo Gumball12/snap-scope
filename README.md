@@ -2,6 +2,11 @@
 
 자주 쓰는 렌즈 초점거리 알아보기
 
+<p align="center">
+  <img src="./docs/summary-preview.png" width="450" title="Summary Preview" alt="Summary Preview">
+  <img src="./docs/app-preview.png" width="450" title="App Preview" alt="App Preview">
+</p>
+
 ## 소개
 
 Snap Scope는 사진 파일의 EXIF 데이터 중 렌즈의 초점거리(Focal length) 정보를 분석하여 이를 시각화해주는 애플리케이션입니다. 자주 사용하는 초점거리를 한눈에 볼 수 있어, 자신의 촬영 스타일을 더 잘 이해할 수 있습니다.

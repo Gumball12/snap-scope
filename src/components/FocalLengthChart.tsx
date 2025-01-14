@@ -27,13 +27,13 @@ export const FocalLengthChart = ({
   return (
     <GlassCard>
       <div class="mb-6 md:mb-8">
-        <h3 class="text-2xl font-semibold text-gray-900">초점 거리 분포</h3>
+        <h3 class="text-2xl font-semibold text-gray-900">초점거리 분포</h3>
         <p class="text-sm text-gray-600">
           분석한 데이터: {validDataCount}장
           {isDataTruncated && ` (상위 ${MAX_VISIBLE_ITEMS}개 표시)`}
         </p>
         <p class="mt-1 text-xs text-gray-500">
-          * 초점 거리는 35mm 포맷 기준으로 환산된 값입니다
+          * 초점거리는 35mm 포맷 기준으로 환산된 값입니다
         </p>
       </div>
       <div class="h-[240px] w-full md:h-[300px]">
@@ -51,7 +51,7 @@ export const FocalLengthChart = ({
               <XAxis
                 dataKey="focalLength"
                 label={{
-                  value: '초점 거리 (mm)',
+                  value: '초점거리 (mm)',
                   position: 'bottom',
                   offset: 0,
                   style: {

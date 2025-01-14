@@ -87,7 +87,7 @@ export const ExportCard = ({
             Snap Scope
           </h3>
           <p class="text-lg text-gray-600">
-            찰칵! 찰칵! 당신의 촬영 패턴을 알려드려요{' '}
+            찰칵! 찰칵! 자주 사용하는 초점거리를 알려드려요{' '}
             <i class="i-twemoji-camera-with-flash align-top" />
           </p>
         </div>
@@ -106,7 +106,7 @@ export const ExportCard = ({
 
       <GlassCard className="grid-col-start-7 grid-col-span-6 shadow-none">
         <i class="i-solar-camera-bold-duotone text-2xl mb-4 text-gray-600" />
-        <MetricBox value={chartData.length} label="발견된 화각" />
+        <MetricBox value={chartData.length} label="발견된 초점거리" />
       </GlassCard>
 
       <footer class="flex h-full flex-col items-end justify-center gap-2 grid-col-start-1 grid-col-span-12">

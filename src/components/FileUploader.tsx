@@ -104,8 +104,8 @@ export const FileUploader = () => {
           class="hidden"
         />
         <div class="pointer-events-none">
-          <p class="mb-2 text-slate-600">
-            이미지 파일을 여기에 끌어다 놓거나 클릭하여 선택해주세요
+          <p class="mb-2 text-slate-600 text-balance break-keep">
+            이미지 파일을 여기에 끌어다 놓거나 클릭해 선택해 주세요
           </p>
           <p class="text-sm text-slate-500">
             {isUploaded

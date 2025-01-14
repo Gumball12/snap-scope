@@ -14,7 +14,7 @@ export const App = () => {
             Snap Scope
           </h1>
           <p class="text-gray-600">
-            찰칵! 찰칵! 당신의 촬영 패턴을 알려드려요{' '}
+            찰칵! 찰칵! 자주 사용하는 초점거리를 알려드려요{' '}
             <i class="i-twemoji-camera-with-flash align-top" />
           </p>
         </header>
@@ -25,11 +25,11 @@ export const App = () => {
         </main>
       </div>
 
-      <footer class="relative space-y-2 text-center text-sm text-gray-500">
-        <p>© 2024 Snap Scope. All rights reserved.</p>
+      <footer class="relative space-y-2 text-center text-sm text-gray-500 break-keep text-balance">
         <p>
-          이미지와 이미지에서 추출하는 모든 데이터는 그 어떤 곳에도 전송하지
-          않습니다.
+          모든 이미지 처리와 EXIF 데이터 분석은 사용자의 브라우저에서만
+          이루어집니다. 이미지와 이미지에서 추출하는 모든 데이터는 그 어떤
+          곳에도 전송하지 않습니다.
         </p>
         <p class="space-x-1">
           <a

@@ -1,10 +1,8 @@
 # Snap Scope
 
-자주 쓰는 렌즈 초점거리 알아보기
-
 <p align="center">
-  <img src="./docs/summary-preview.png" width="450" title="Summary Preview" alt="Summary Preview">
   <img src="./docs/app-preview.png" width="450" title="App Preview" alt="App Preview">
+  <img src="./docs/summary-preview.png" width="450" title="Summary Preview" alt="Summary Preview">
 </p>
 
 ## 소개

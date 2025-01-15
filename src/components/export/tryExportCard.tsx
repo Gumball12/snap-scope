@@ -11,15 +11,27 @@ export const tryExportCard = async (
   const processedData = groupChartData(chartData);
   const topThree = processedData.slice(0, 3);
 
-  const container = document.createElement('div');
-  Object.assign(container.style, {
-    width: '800px',
-    height: '520px',
+  const parentContainer = document.createElement('div');
+  Object.assign(parentContainer.style, {
+    position: 'absolute',
+    zIndex: -999,
+    left: '0',
+    top: '0',
+    opacity: 0,
+
+    // avoid cropping imgs when exporting
     transform: 'scale(1)',
     transformOrigin: 'top left',
   });
 
-  document.body.appendChild(container);
+  const container = document.createElement('div');
+  Object.assign(container.style, {
+    width: '800px',
+    height: '520px',
+  });
+
+  parentContainer.appendChild(container);
+  document.body.appendChild(parentContainer);
 
   render(
     <ExportCard
@@ -31,6 +43,13 @@ export const tryExportCard = async (
   );
 
   try {
+    // avoid missing svg icons in Safari
+    await toBlob(container, {
+      backgroundColor: '#fff',
+      width: 800,
+      height: 520,
+    });
+
     const blob = await toBlob(container, {
       backgroundColor: '#fff',
       width: 800,
@@ -48,6 +67,6 @@ export const tryExportCard = async (
     link.click();
     URL.revokeObjectURL(url);
   } finally {
-    document.body.removeChild(container);
+    document.body.removeChild(parentContainer);
   }
 };

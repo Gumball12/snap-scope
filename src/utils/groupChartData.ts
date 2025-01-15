@@ -1,9 +1,11 @@
 import type { ChartData } from '../types';
 
 export const MAX_VISIBLE_ITEMS = 10;
-const GROUP_SIZE = 5;
 
-export const groupChartData = (data: ChartData[]): ChartData[] => {
+export const groupChartData = (
+  data: ChartData[],
+  groupSize: number,
+): ChartData[] => {
   const groupedData = data.reduce(
     (acc, item) => {
       if (!item.focalLength) {
@@ -11,9 +13,9 @@ export const groupChartData = (data: ChartData[]): ChartData[] => {
       }
 
       const roundedFocalLength =
-        Math.floor(parseInt(item.focalLength.toString()) / GROUP_SIZE) *
-        GROUP_SIZE;
-      const key = `${roundedFocalLength}~${roundedFocalLength + GROUP_SIZE - 1}`;
+        Math.floor(parseInt(item.focalLength.toString()) / groupSize) *
+        groupSize;
+      const key = createKey(roundedFocalLength, groupSize);
 
       if (!acc[key]) {
         acc[key] = {
@@ -34,3 +36,8 @@ export const groupChartData = (data: ChartData[]): ChartData[] => {
 
   return sortedData.slice(0, MAX_VISIBLE_ITEMS);
 };
+
+const createKey = (roundedFocalLength: number, groupSize: number) =>
+  groupSize === 1
+    ? roundedFocalLength
+    : `${roundedFocalLength}~${roundedFocalLength + groupSize - 1}`;

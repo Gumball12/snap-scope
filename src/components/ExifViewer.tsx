@@ -1,6 +1,7 @@
 import type { FocalLengthData } from '../types';
 import { cn } from '../utils/styles';
 import { selectedFiles } from './FileUploader';
+import { FocalLengthAreaChart } from './FocalLengthAreaChart';
 import { FocalLengthChart } from './FocalLengthChart';
 import { FocalLengthDetails } from './FocalLengthDetails';
 import { tryExportCard } from './export/tryExportCard';
@@ -110,6 +111,7 @@ export const ExifViewer = () => {
   return (
     <div class="space-y-6">
       <FocalLengthChart data={chartData} validDataCount={validDataCount} />
+      <FocalLengthAreaChart data={chartData} validDataCount={validDataCount} />
       <FocalLengthDetails data={focalLengths} validDataCount={validDataCount} />
 
       <div class="text-center space-y-6">

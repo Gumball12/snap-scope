@@ -21,7 +21,7 @@ export const FocalLengthChart = ({
   data,
   validDataCount,
 }: FocalLengthChartProps) => {
-  const processedData = groupChartData(data);
+  const processedData = groupChartData(data, 5);
   const isDataTruncated = data.length > MAX_VISIBLE_ITEMS;
 
   return (

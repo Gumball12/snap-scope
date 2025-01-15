@@ -8,7 +8,7 @@ export const tryExportCard = async (
   chartData: ChartData[],
   validDataCount: number,
 ): Promise<void> => {
-  const processedData = groupChartData(chartData);
+  const processedData = groupChartData(chartData, 1);
   const topThree = processedData.slice(0, 3);
 
   const parentContainer = document.createElement('div');

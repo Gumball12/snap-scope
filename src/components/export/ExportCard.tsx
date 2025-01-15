@@ -19,7 +19,7 @@ const MetricBox = ({ value, label }: { value: number; label: string }) => (
   </div>
 );
 
-const RANK_STYLES = {
+export const RANK_STYLES = {
   1: {
     bg: 'bg-amber-50',
     border: 'border-amber-200',
@@ -40,7 +40,7 @@ const RANK_STYLES = {
   },
 } as const;
 
-const RankBox = ({
+export const RankBox = ({
   rank,
   focalLength,
   count,

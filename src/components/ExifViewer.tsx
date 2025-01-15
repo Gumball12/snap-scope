@@ -4,6 +4,7 @@ import { selectedFiles } from './FileUploader';
 import { FocalLengthAreaChart } from './FocalLengthAreaChart';
 import { FocalLengthChart } from './FocalLengthChart';
 import { FocalLengthDetails } from './FocalLengthDetails';
+import { FocalLengthRanking } from './FocalLengthRanking';
 import { tryExportCard } from './export/tryExportCard';
 import { parse } from 'exifr';
 import { useEffect, useState, useMemo, useCallback } from 'preact/hooks';
@@ -112,6 +113,7 @@ export const ExifViewer = () => {
     <div class="space-y-6">
       <FocalLengthChart data={chartData} validDataCount={validDataCount} />
       <FocalLengthAreaChart data={chartData} validDataCount={validDataCount} />
+      <FocalLengthRanking data={chartData} />
       <FocalLengthDetails data={focalLengths} validDataCount={validDataCount} />
 
       <div class="text-center space-y-6">

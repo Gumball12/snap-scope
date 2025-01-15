@@ -19,7 +19,7 @@ const MetricBox = ({ value, label }: { value: number; label: string }) => (
   </div>
 );
 
-const RANK_STYLES = {
+export const RANK_STYLES = {
   1: {
     bg: 'bg-amber-50',
     border: 'border-amber-200',
@@ -40,7 +40,7 @@ const RANK_STYLES = {
   },
 } as const;
 
-const RankBox = ({
+export const RankBox = ({
   rank,
   focalLength,
   count,
@@ -79,7 +79,7 @@ export const ExportCard = ({
   <div class="relative flex h-[520px] w-[800px] flex-col gap-6 overflow-hidden p-10 pb-6">
     <BackgroundBlur variant="card" />
 
-    <div class="grid h-full grid-cols-12 gap-4">
+    <div class="relative grid h-full grid-cols-12 gap-4">
       <header class="flex items-center gap-3 grid-col-start-1 grid-col-span-12">
         <div>
           <h3 class="text-3xl font-semibold text-gray-900 leading-relaxed">

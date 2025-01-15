@@ -12,16 +12,16 @@ import {
   LabelList,
 } from 'recharts';
 
-interface FocalLengthChartProps {
+interface FocalLengthBarChartProps {
   data: ChartData[];
   validDataCount: number;
 }
 
-export const FocalLengthChart = ({
+export const FocalLengthBarChart = ({
   data,
   validDataCount,
-}: FocalLengthChartProps) => {
-  const processedData = groupChartData(data);
+}: FocalLengthBarChartProps) => {
+  const processedData = groupChartData(data, 5);
   const isDataTruncated = data.length > MAX_VISIBLE_ITEMS;
 
   return (

@@ -108,8 +108,9 @@ export const ExportCard = ({
         <MetricBox value={chartData.length} label="발견된 초점거리" />
       </GlassCard>
 
-      <footer class="flex h-full flex-col items-end justify-center gap-2 grid-col-start-1 grid-col-span-12">
-        <div class="text-sm text-gray-400">https://snap-scope.shj.rip</div>
+      <footer class="flex h-full flex-col items-end justify-center gap-0.5 grid-col-start-1 grid-col-span-12 text-xs text-gray-500">
+        <span>초점거리는 35mm 포맷 기준으로 환산된 값입니다</span>
+        <span>https://snap-scope.shj.rip</span>
       </footer>
     </div>
   </div>

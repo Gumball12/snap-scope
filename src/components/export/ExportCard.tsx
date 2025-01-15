@@ -13,7 +13,7 @@ interface ExportCardProps {
 const MetricBox = ({ value, label }: { value: number; label: string }) => (
   <div>
     <div class="mb-2 text-5xl font-bold text-gray-900 tabular-nums">
-      {value}
+      {value} <span class="text-xl font-medium">개</span>
     </div>
     <div class="text-sm text-gray-600">{label}</div>
   </div>

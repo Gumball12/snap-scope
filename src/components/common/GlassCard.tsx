@@ -14,7 +14,7 @@ export const GlassCard = ({ children, className, onClick }: GlassCardProps) => {
       class={cn(
         'rounded-xl backdrop-blur-xl bg-white/40',
         'border border-white/20',
-        'shadow-lg hover:shadow-xl transition-shadow duration-400 shadow-black/5',
+        'shadow-lg hover:shadow-xl transition-all duration-200 shadow-black/5',
         'p-6',
         className,
       )}

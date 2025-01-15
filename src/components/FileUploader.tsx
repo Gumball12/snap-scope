@@ -8,21 +8,53 @@ export const selectedFiles = signal<File[]>([]);
 export const FileUploader = () => {
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
   const isUploaded = selectedFiles.value.length > 0;
 
   const handleFiles = useCallback((files: FileList | File[]) => {
-    const newFiles = Array.from(files).filter(
-      newFile =>
-        !selectedFiles.value.some(
-          existingFile => existingFile.name === newFile.name,
-        ),
-    );
+    const newFiles = Array.from(files)
+      .filter(file => file.type.startsWith('image/'))
+      .filter(
+        newFile =>
+          !selectedFiles.value.some(
+            existingFile => existingFile.name === newFile.name,
+          ),
+      );
 
     if (newFiles.length > 0) {
       selectedFiles.value = [...selectedFiles.value, ...newFiles];
     }
   }, []);
+
+  const processEntry = useCallback(
+    async (entry: FileSystemEntry): Promise<File[]> => {
+      if (entry.isFile) {
+        const fileEntry = entry as FileSystemFileEntry;
+        return new Promise<File[]>(resolve => {
+          fileEntry.file(file => {
+            resolve(file.type.startsWith('image/') ? [file] : []);
+          });
+        });
+      }
+
+      if (entry.isDirectory) {
+        const dirEntry = entry as FileSystemDirectoryEntry;
+        const dirReader = dirEntry.createReader();
+
+        const entries = await new Promise<FileSystemEntry[]>(resolve => {
+          dirReader.readEntries(entries => resolve(entries));
+        });
+
+        const filePromises: Promise<File[]>[] = entries.map(entry =>
+          processEntry(entry),
+        );
+        const fileArrays = await Promise.all(filePromises);
+        return fileArrays.flat();
+      }
+
+      return [];
+    },
+    [],
+  );
 
   const handleFileChange = useCallback(
     (e: Event) => {
@@ -61,19 +93,32 @@ export const FileUploader = () => {
   }, []);
 
   const handleDrop = useCallback(
-    (e: DragEvent) => {
+    async (e: DragEvent) => {
       e.preventDefault();
       e.stopPropagation();
       setIsDragging(false);
 
-      if (e.dataTransfer?.files) {
-        handleFiles(e.dataTransfer.files);
+      const items = e.dataTransfer?.items;
+      if (!items) {
+        return;
+      }
+
+      const entries = Array.from(items)
+        .map(item => item.webkitGetAsEntry())
+        .filter((entry): entry is FileSystemEntry => entry !== null);
+
+      const filePromises = entries.map(entry => processEntry(entry));
+      const fileArrays = await Promise.all(filePromises);
+      const files = fileArrays.flat();
+
+      if (files.length > 0) {
+        handleFiles(files);
       }
     },
-    [handleFiles],
+    [handleFiles, processEntry],
   );
 
-  const handleAreaClick = useCallback(() => {
+  const handleClick = useCallback(() => {
     fileInputRef.current?.click();
   }, []);
 
@@ -81,15 +126,15 @@ export const FileUploader = () => {
     <GlassCard
       className={cn(
         'p-0', // overwrite GlassCard default style
-        'upload-area text-center',
+        'upload-area text-center cursor-pointer',
         'border-2 border-dashed border-gray/40',
         isDragging && 'border-blue-400/50 bg-blue-50/50',
-        'cursor-pointer hover:border-blue-300/50',
+        'hover:border-blue-300/50 hover:bg-blue-50/30',
       )}
+      onClick={handleClick}
     >
       <div
         class={cn('transition-all p-8', !isUploaded && 'py-25')}
-        onClick={handleAreaClick}
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
@@ -103,11 +148,11 @@ export const FileUploader = () => {
           onChange={handleFileChange}
           class="hidden"
         />
-        <div class="pointer-events-none">
+        <div>
           <p class="mb-2 text-slate-600 text-balance break-keep">
-            이미지 파일을 여기에 끌어다 놓거나 클릭해 선택해 주세요
+            이미지 파일이나 폴더를 여기에 끌어다 놓거나 클릭해 선택해 주세요
           </p>
-          <p class="text-sm text-slate-500">
+          <p class="mt-4 text-sm text-slate-500">
             {isUploaded
               ? `${selectedFiles.value.length}개의 파일이 선택됨`
               : '선택된 파일 없음'}

@@ -185,11 +185,13 @@ export const FileUploader = () => {
             이미지 파일이나 폴더를 여기에 끌어다 놓거나 클릭해 선택해 주세요
           </p>
           <p class="mt-2 text-xs text-slate-500">
-            EXIF 데이터가 포함된 이미지 파일을 지원합니다
+            아직 지원하지 않는 파일 포맷이 있을 수 있어요.
+            <br />
+            EXIF 데이터가 존재하지 않아도 분석이 어려워요.
           </p>
           {unsupportedExtensions.length > 0 && (
             <p class="mt-2 text-xs text-amber-500 animate-fade-in">
-              아직 지원하지 않는 파일 포맷이 있습니다:
+              아직 지원하지 않거나 데이터 추출에 실패한 포맷이 있습니다:
               <br />
               {unsupportedExtensions.join(', ')}
             </p>

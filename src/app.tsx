@@ -39,6 +39,10 @@ export const App = () => {
           >
             GitHub
           </a>
+          {' / '}
+          <a href="mailto:to@shj.rip" class="underline">
+            to@shj.rip
+          </a>
         </p>
       </footer>
     </div>

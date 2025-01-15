@@ -8,7 +8,6 @@ interface ExportCardProps {
   validDataCount: number;
   chartData: ChartData[];
   topThree: ChartData[];
-  isExporting?: boolean;
 }
 
 const MetricBox = ({ value, label }: { value: number; label: string }) => (

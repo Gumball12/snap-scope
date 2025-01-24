@@ -1,6 +1,7 @@
 import type { ChartData } from '../types';
 import { groupChartData, MAX_VISIBLE_ITEMS } from '../utils/groupChartData';
 import { GlassCard } from './common/GlassCard';
+import { useTranslation } from 'react-i18next';
 import {
   BarChart,
   Bar,
@@ -21,19 +22,27 @@ export const FocalLengthBarChart = ({
   data,
   validDataCount,
 }: FocalLengthBarChartProps) => {
+  const { t } = useTranslation();
   const processedData = groupChartData(data, 5);
   const isDataTruncated = data.length > MAX_VISIBLE_ITEMS;
 
   return (
     <GlassCard>
       <div className="mb-6 md:mb-8">
-        <h3 className="text-2xl font-semibold text-gray-900">초점거리 분포</h3>
+        <h3 className="text-2xl font-semibold text-gray-900">
+          {t('analysis.focalLengthDistribution.title')}
+        </h3>
         <p className="text-sm text-gray-600">
-          분석한 데이터: {validDataCount}장
-          {isDataTruncated && ` (상위 ${MAX_VISIBLE_ITEMS}개 표시)`}
+          {t('analysis.focalLengthDistribution.analyzedData', {
+            count: validDataCount,
+          })}
+          {isDataTruncated &&
+            t('analysis.focalLengthDistribution.topDisplay', {
+              count: MAX_VISIBLE_ITEMS,
+            })}
         </p>
         <p className="mt-1 text-xs text-gray-500">
-          * 초점거리는 35mm 포맷 기준으로 환산된 값입니다
+          {t('analysis.focalLengthDistribution.notice')}
         </p>
       </div>
       <div className="h-[240px] w-full md:h-[300px]">
@@ -51,7 +60,7 @@ export const FocalLengthBarChart = ({
               <XAxis
                 dataKey="focalLength"
                 label={{
-                  value: '초점거리 (mm)',
+                  value: t('chart.axis.focalLength'),
                   position: 'bottom',
                   offset: 0,
                   style: {
@@ -66,7 +75,7 @@ export const FocalLengthBarChart = ({
               />
               <YAxis
                 label={{
-                  value: '촬영 수',
+                  value: t('chart.axis.photoCount'),
                   angle: -90,
                   position: 'insideLeft',
                   offset: 10,
@@ -78,7 +87,10 @@ export const FocalLengthBarChart = ({
                 tick={{ fill: '#374151', fontSize: 12 }}
               />
               <Tooltip
-                formatter={(value: number) => [value, '촬영 수']}
+                formatter={(value: number) => [
+                  value,
+                  t('chart.tooltip.photoCount'),
+                ]}
                 labelFormatter={(label: string | number) =>
                   typeof label === 'string' ? label : `${Math.round(label)}mm`
                 }
@@ -112,7 +124,7 @@ export const FocalLengthBarChart = ({
           </ResponsiveContainer>
         ) : (
           <div className="flex h-full items-center justify-center text-sm text-gray-500">
-            분석 가능한 데이터가 없습니다
+            {t('analysis.noData')}
           </div>
         )}
       </div>

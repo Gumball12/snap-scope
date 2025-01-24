@@ -8,8 +8,10 @@ import { FocalLengthRanking } from './FocalLengthRanking';
 import { tryExportCard } from './export/tryExportCard';
 import { parse } from 'exifr';
 import { useEffect, useState, useMemo, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const ExifViewer = () => {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [focalLengths, setFocalLengths] = useState<FocalLengthData[]>([]);
   const [isExporting, setIsExporting] = useState(false);
@@ -100,7 +102,7 @@ export const ExifViewer = () => {
   if (isLoading) {
     return (
       <div className="text-center">
-        <div className="text-[15px] text-gray-600">데이터를 분석하는 중...</div>
+        <div className="text-[15px] text-gray-600">{t('analysis.loading')}</div>
       </div>
     );
   }
@@ -133,8 +135,8 @@ export const ExifViewer = () => {
           <i className="i-solar-gallery-favourite-bold-duotone" />
           <span>
             {isExporting
-              ? '이미지 만드는 중...'
-              : '나만의 포토그래피 요약 이미지 만들기'}
+              ? t('export.button.processing')
+              : t('export.button.default')}
           </span>
         </button>
 
@@ -142,7 +144,7 @@ export const ExifViewer = () => {
           onClick={returnToHome}
           className="underline text-sm text-gray-600"
         >
-          처음으로 돌아가기
+          {t('navigation.returnHome')}
         </button>
       </div>
     </div>

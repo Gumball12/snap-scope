@@ -1,5 +1,6 @@
 import type { ChartData } from '../types';
 import { GlassCard } from './common/GlassCard';
+import { useTranslation } from 'react-i18next';
 import {
   AreaChart,
   Area,
@@ -22,6 +23,7 @@ const CustomTooltip = ({
   active?: boolean;
   payload?: any[];
 }) => {
+  const { t } = useTranslation();
   if (!active || !payload?.length) {
     return null;
   }
@@ -30,7 +32,9 @@ const CustomTooltip = ({
   return (
     <div className="rounded-lg border border-white/20 bg-white/80 backdrop-blur-sm p-2 shadow-lg text-sm">
       <p className="font-medium text-gray-900">{data.focalLength}mm</p>
-      <p className="text-gray-600">{data.count}회 사용</p>
+      <p className="text-gray-600">
+        {t('analysis.details.usageCount', { count: data.count })}
+      </p>
     </div>
   );
 };
@@ -39,15 +43,21 @@ export const FocalLengthAreaChart = ({
   data,
   validDataCount,
 }: FocalLengthAreaChartProps) => {
+  const { t } = useTranslation();
+
   return (
     <GlassCard>
       <div className="mb-6 md:mb-8">
-        <h3 className="text-2xl font-semibold text-gray-900">초점거리 분포</h3>
+        <h3 className="text-2xl font-semibold text-gray-900">
+          {t('analysis.focalLengthDistribution.title')}
+        </h3>
         <p className="text-sm text-gray-600">
-          분석한 데이터: {validDataCount}장
+          {t('analysis.focalLengthDistribution.analyzedData', {
+            count: validDataCount,
+          })}
         </p>
         <p className="mt-1 text-xs text-gray-500">
-          * 초점거리는 35mm 포맷 기준으로 환산된 값입니다
+          {t('analysis.focalLengthDistribution.notice')}
         </p>
       </div>
       <div className="h-[240px] w-full">

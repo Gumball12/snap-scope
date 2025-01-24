@@ -1,6 +1,7 @@
 import type { FocalLengthData } from '../types';
 import { cn } from '../utils/styles';
 import { GlassCard } from './common/GlassCard';
+import { useTranslation } from 'react-i18next';
 
 interface FocalLengthDetailsProps {
   data: FocalLengthData[];
@@ -11,11 +12,17 @@ export const FocalLengthDetails = ({
   data,
   validDataCount,
 }: FocalLengthDetailsProps) => {
+  const { t } = useTranslation();
+
   return (
     <GlassCard>
       <div className="mb-6">
-        <h3 className="text-2xl font-semibold text-gray-900">상세 데이터</h3>
-        <p className="text-sm text-gray-600">총 {validDataCount}개</p>
+        <h3 className="text-2xl font-semibold text-gray-900">
+          {t('analysis.details.title')}
+        </h3>
+        <p className="text-sm text-gray-600">
+          {t('analysis.details.total', { count: validDataCount })}
+        </p>
       </div>
       <div className="max-h-[240px] space-y-1 overflow-y-auto text-gray-900 text-sm">
         {data.map((item, index) => (
@@ -29,7 +36,7 @@ export const FocalLengthDetails = ({
             >
               {item.focalLength
                 ? `${Math.round(item.focalLength)}mm`
-                : '정보 없음'}
+                : t('analysis.details.noInfo')}
             </span>
           </div>
         ))}

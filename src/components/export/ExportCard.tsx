@@ -3,21 +3,19 @@ import { cn } from '../../utils/styles';
 import { BackgroundBlur } from '../common/BackgroundBlur';
 import { GlassCard } from '../common/GlassCard';
 import { StatCard } from './StatCard';
+import { useTranslation } from 'react-i18next';
 
-interface ExportCardProps {
-  validDataCount: number;
-  chartData: ChartData[];
-  topThree: ChartData[];
-}
-
-const MetricBox = ({ value, label }: { value: number; label: string }) => (
-  <div>
-    <div className="mb-2 text-5xl font-bold text-gray-900 tabular-nums">
-      {value} <span className="text-xl font-medium">개</span>
+const MetricBox = ({ value, label }: { value: number; label: string }) => {
+  const { t } = useTranslation();
+  return (
+    <div>
+      <div className="mb-2 text-5xl font-bold text-gray-900 tabular-nums">
+        {value} <span className="text-xl font-medium">{t('units.count')}</span>
+      </div>
+      <div className="text-sm text-gray-600">{label}</div>
     </div>
-    <div className="text-sm text-gray-600">{label}</div>
-  </div>
-);
+  );
+};
 
 export const RANK_STYLES = {
   1: {
@@ -49,6 +47,7 @@ export const RankBox = ({
   focalLength: string | number;
   count: number;
 }) => {
+  const { t } = useTranslation();
   const style = RANK_STYLES[rank as keyof typeof RANK_STYLES];
 
   return (
@@ -65,53 +64,74 @@ export const RankBox = ({
         <div className="mb-1 text-xl font-semibold text-gray-900">
           {focalLength}mm
         </div>
-        <div className="text-xs text-gray-500">{count}회 사용</div>
+        <div className="text-xs text-gray-500">
+          {t('analysis.details.usageCount', { count })}
+        </div>
       </div>
     </div>
   );
 };
 
+interface ExportCardProps {
+  validDataCount: number;
+  chartData: ChartData[];
+  topThree: ChartData[];
+}
+
 export const ExportCard = ({
   validDataCount,
   chartData,
   topThree,
-}: ExportCardProps) => (
-  <div className="relative flex h-[520px] w-[800px] flex-col gap-6 overflow-hidden p-10 pb-6">
-    <BackgroundBlur variant="card" />
+}: ExportCardProps) => {
+  const { t } = useTranslation();
 
-    <div className="relative grid h-full grid-cols-12 gap-4">
-      <header className="flex items-center gap-3 grid-col-start-1 grid-col-span-12">
-        <div>
-          <h3 className="text-3xl font-semibold text-gray-900 leading-relaxed">
-            Snap Scope
-          </h3>
-          <p className="text-lg text-gray-600">
-            찰칵! 찰칵! 자주 사용하는 초점거리를 알려드려요{' '}
-            <i className="i-twemoji-camera-with-flash align-top" />
-          </p>
-        </div>
-      </header>
+  return (
+    <div className="relative flex h-[520px] w-[800px] flex-col gap-6 overflow-hidden p-10 pb-6">
+      <BackgroundBlur variant="card" />
 
-      {topThree.map((data, index) => (
-        <StatCard grid={{ start: index * 4 + 1, span: 4 }}>
-          <RankBox {...data} rank={index + 1} />
-        </StatCard>
-      ))}
+      <div className="relative grid h-full grid-cols-12 gap-4">
+        <header className="flex items-center gap-3 grid-col-start-1 grid-col-span-12">
+          <div>
+            <h3 className="text-3xl font-semibold text-gray-900 leading-relaxed">
+              {t('title')}
+            </h3>
+            <p className="text-lg text-gray-600">
+              {t('subtitle')}{' '}
+              <i className="i-twemoji-camera-with-flash align-top" />
+            </p>
+          </div>
+        </header>
 
-      <GlassCard className="grid-col-start-1 grid-col-span-6 shadow-none">
-        <i className="i-solar-gallery-bold-duotone text-2xl mb-4 text-gray-600" />
-        <MetricBox value={validDataCount} label="분석한 이미지" />
-      </GlassCard>
+        {topThree.map((data, index) => (
+          <StatCard
+            grid={{ start: index * 4 + 1, span: 4 }}
+            key={data.focalLength}
+          >
+            <RankBox {...data} rank={index + 1} />
+          </StatCard>
+        ))}
 
-      <GlassCard className="grid-col-start-7 grid-col-span-6 shadow-none">
-        <i className="i-solar-camera-bold-duotone text-2xl mb-4 text-gray-600" />
-        <MetricBox value={chartData.length} label="발견된 초점거리" />
-      </GlassCard>
+        <GlassCard className="grid-col-start-1 grid-col-span-6 shadow-none">
+          <i className="i-solar-gallery-bold-duotone text-2xl mb-4 text-gray-600" />
+          <MetricBox
+            value={validDataCount}
+            label={t('export.metrics.analyzedPhotos')}
+          />
+        </GlassCard>
 
-      <footer className="flex h-full flex-col items-end justify-center gap-0.5 grid-col-start-1 grid-col-span-12 text-xs text-gray-500">
-        <span>초점거리는 35mm 포맷 기준으로 환산된 값입니다</span>
-        <span>https://snap-scope.shj.rip</span>
-      </footer>
+        <GlassCard className="grid-col-start-7 grid-col-span-6 shadow-none">
+          <i className="i-solar-camera-bold-duotone text-2xl mb-4 text-gray-600" />
+          <MetricBox
+            value={chartData.length}
+            label={t('export.metrics.discoveredFocalLengths')}
+          />
+        </GlassCard>
+
+        <footer className="flex h-full flex-col items-end justify-center gap-0.5 grid-col-start-1 grid-col-span-12 text-xs text-gray-500">
+          <span>{t('analysis.focalLengthDistribution.notice')}</span>
+          <span>https://snap-scope.shj.rip</span>
+        </footer>
+      </div>
     </div>
-  </div>
-);
+  );
+};

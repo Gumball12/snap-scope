@@ -2,7 +2,7 @@ import type { ChartData } from '../../types';
 import { groupChartData } from '../../utils/groupChartData';
 import { ExportCard } from './ExportCard';
 import { toBlob } from 'html-to-image';
-import { render } from 'preact';
+import { createRoot } from 'react-dom/client';
 
 export const tryExportCard = async (
   chartData: ChartData[],
@@ -33,13 +33,13 @@ export const tryExportCard = async (
   parentContainer.appendChild(container);
   document.body.appendChild(parentContainer);
 
-  render(
+  const root = createRoot(container);
+  root.render(
     <ExportCard
       validDataCount={validDataCount}
       chartData={chartData}
       topThree={topThree}
     />,
-    container,
   );
 
   try {
@@ -67,6 +67,7 @@ export const tryExportCard = async (
     link.click();
     URL.revokeObjectURL(url);
   } finally {
+    root.unmount();
     document.body.removeChild(parentContainer);
   }
 };

@@ -26,17 +26,17 @@ export const FocalLengthBarChart = ({
 
   return (
     <GlassCard>
-      <div class="mb-6 md:mb-8">
-        <h3 class="text-2xl font-semibold text-gray-900">초점거리 분포</h3>
-        <p class="text-sm text-gray-600">
+      <div className="mb-6 md:mb-8">
+        <h3 className="text-2xl font-semibold text-gray-900">초점거리 분포</h3>
+        <p className="text-sm text-gray-600">
           분석한 데이터: {validDataCount}장
           {isDataTruncated && ` (상위 ${MAX_VISIBLE_ITEMS}개 표시)`}
         </p>
-        <p class="mt-1 text-xs text-gray-500">
+        <p className="mt-1 text-xs text-gray-500">
           * 초점거리는 35mm 포맷 기준으로 환산된 값입니다
         </p>
       </div>
-      <div class="h-[240px] w-full md:h-[300px]">
+      <div className="h-[240px] w-full md:h-[300px]">
         {processedData.length > 0 ? (
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
@@ -111,7 +111,7 @@ export const FocalLengthBarChart = ({
             </BarChart>
           </ResponsiveContainer>
         ) : (
-          <div class="flex h-full items-center justify-center text-sm text-gray-500">
+          <div className="flex h-full items-center justify-center text-sm text-gray-500">
             분석 가능한 데이터가 없습니다
           </div>
         )}

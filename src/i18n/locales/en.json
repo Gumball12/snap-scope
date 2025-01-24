@@ -1,0 +1,65 @@
+{
+  "title": "Snap Scope",
+  "subtitle": "Click! Click! Discover your favorite focal lengths",
+  "fileUploader": {
+    "dropzone": "Drop image files or folders here, or click to select",
+    "notice": {
+      "unsupportedFormat": "Some file formats may not be supported.",
+      "exifRequired": "EXIF data is required for image analysis.",
+      "unsupportedFiles": "Unsupported formats or failed to extract data:",
+      "selectedFiles": "{{count}} files selected",
+      "noFiles": "No files selected"
+    }
+  },
+  "analysis": {
+    "loading": "Analyzing data...",
+    "noData": "No data available for analysis",
+    "focalLengthDistribution": {
+      "title": "Focal Length Distribution",
+      "analyzedData": "Photos analyzed: {{count}}",
+      "topDisplay": "(Top {{count}} displayed)",
+      "notice": "* Focal lengths are converted to 35mm format equivalent"
+    },
+    "mostUsedFocalLength": {
+      "title": "Most Used Focal Lengths"
+    },
+    "details": {
+      "title": "Detailed Data",
+      "total": "Total {{count}}",
+      "noInfo": "No info",
+      "usageCount": "Used {{count}} times"
+    }
+  },
+  "chart": {
+    "axis": {
+      "focalLength": "Focal Length (mm)",
+      "photoCount": "Photo Count"
+    },
+    "tooltip": {
+      "photoCount": "photos"
+    }
+  },
+  "export": {
+    "button": {
+      "default": "Create My Photography Summary Image",
+      "processing": "Creating image..."
+    },
+    "unit": "items",
+    "metrics": {
+      "analyzedPhotos": "Analyzed Photos",
+      "discoveredFocalLengths": "Discovered Focal Lengths"
+    }
+  },
+  "navigation": {
+    "returnHome": "Return to Home"
+  },
+  "footer": {
+    "privacy": "All image processing and EXIF data analysis are performed entirely within your browser. No images or extracted data are transmitted anywhere."
+  },
+  "language": {
+    "toggle": "한국어로 보기"
+  },
+  "units": {
+    "count": "ea"
+  }
+}

@@ -1,6 +1,8 @@
 import { App } from './app.tsx';
+import './i18n';
 import '@unocss/reset/tailwind.css';
-import { render } from 'preact';
-import 'uno.css';
+import { createRoot } from 'react-dom/client';
+import 'virtual:uno.css';
 
-render(<App />, document.getElementById('app')!);
+const root = createRoot(document.getElementById('app')!);
+root.render(<App />);

@@ -1,7 +1,7 @@
-import { ComponentChildren } from 'preact';
+import { ReactNode } from 'react';
 
 interface StatCardProps {
-  children: ComponentChildren;
+  children: ReactNode;
   className?: string;
   icon?: string;
   grid?: {
@@ -25,10 +25,10 @@ export const StatCard = ({
     : undefined;
 
   return (
-    <div class={className} style={gridStyle}>
+    <div className={className} style={gridStyle}>
       {icon && (
-        <div class="mb-4 text-2xl text-gray-600">
-          <i class={icon} />
+        <div className="mb-4 text-2xl text-gray-600">
+          <i className={icon} />
         </div>
       )}
       {children}

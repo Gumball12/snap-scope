@@ -1,8 +1,8 @@
 import { cn } from '../../utils/styles';
-import type { ComponentChildren } from 'preact';
+import type { ReactNode } from 'react';
 
 interface GlassCardProps {
-  children: ComponentChildren;
+  children: ReactNode;
   className?: string;
   onClick?: () => void;
 }
@@ -11,7 +11,7 @@ export const GlassCard = ({ children, className, onClick }: GlassCardProps) => {
   return (
     <div
       onClick={onClick}
-      class={cn(
+      className={cn(
         'rounded-xl backdrop-blur-xl bg-white/40',
         'border border-white/20',
         'shadow-lg hover:shadow-xl transition-all duration-200 shadow-black/5',

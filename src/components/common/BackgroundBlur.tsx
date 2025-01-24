@@ -27,11 +27,11 @@ export const BackgroundBlur = ({ variant = 'app' }: BackgroundBlurProps) => {
   const bubbles = variant === 'card' ? CARD_BUBBLES : BUBBLES;
 
   return (
-    <div class="fixed inset-0 overflow-hidden">
+    <div className="fixed inset-0 overflow-hidden">
       {bubbles.map((bubble, index) => (
         <div
           key={index}
-          class={cn(
+          className={cn(
             'absolute rounded-full animate-pulse',
             bubble.color,
             bubble.blur,

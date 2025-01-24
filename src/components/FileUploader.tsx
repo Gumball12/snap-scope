@@ -1,53 +1,57 @@
+import { useFiles } from '../contexts/FileContext';
 import { cn } from '../utils/styles';
 import { GlassCard } from './common/GlassCard';
-import { signal } from '@preact/signals';
 import { parse } from 'exifr';
-import { useCallback, useState, useRef } from 'preact/hooks';
-
-export const selectedFiles = signal<File[]>([]);
+import { useCallback, useState, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const FileUploader = () => {
+  const { t } = useTranslation();
   const [isDragging, setIsDragging] = useState(false);
   const [unsupportedExtensions, setUnsupportedExtensions] = useState<string[]>(
     [],
   );
+  const { files: selectedFiles, setFiles: setSelectedFiles } = useFiles();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const isUploaded = selectedFiles.value.length > 0;
+  const isUploaded = selectedFiles.length > 0;
 
-  const handleFiles = useCallback(async (files: FileList | File[]) => {
-    const unsupported = new Set<string>();
-    const supportChecks = await Promise.all(
-      Array.from(files).map(async file => {
-        const isSupported = await checkExifSupport(file);
-        if (!isSupported) {
-          const extension = getFileExtension(file.name);
-          if (extension) {
-            unsupported.add(extension);
+  const handleFiles = useCallback(
+    async (files: FileList | File[]) => {
+      const unsupported = new Set<string>();
+      const supportChecks = await Promise.all(
+        Array.from(files).map(async file => {
+          const isSupported = await checkExifSupport(file);
+          if (!isSupported) {
+            const extension = getFileExtension(file.name);
+            if (extension) {
+              unsupported.add(extension);
+            }
           }
-        }
-        return { file, isSupported };
-      }),
-    );
-
-    const newFiles = supportChecks
-      .filter(({ isSupported }) => isSupported)
-      .map(({ file }) => file)
-      .filter(
-        newFile =>
-          !selectedFiles.value.some(
-            existingFile => existingFile.name === newFile.name,
-          ),
+          return { file, isSupported };
+        }),
       );
 
-    if (unsupported.size > 0) {
-      setUnsupportedExtensions(Array.from(unsupported));
-      setTimeout(() => setUnsupportedExtensions([]), 3000);
-    }
+      const newFiles = supportChecks
+        .filter(({ isSupported }) => isSupported)
+        .map(({ file }) => file)
+        .filter(
+          newFile =>
+            !selectedFiles.some(
+              existingFile => existingFile.name === newFile.name,
+            ),
+        );
 
-    if (newFiles.length > 0) {
-      selectedFiles.value = [...selectedFiles.value, ...newFiles];
-    }
-  }, []);
+      if (unsupported.size > 0) {
+        setUnsupportedExtensions(Array.from(unsupported));
+        setTimeout(() => setUnsupportedExtensions([]), 3000);
+      }
+
+      if (newFiles.length > 0) {
+        setSelectedFiles([...selectedFiles, ...newFiles]);
+      }
+    },
+    [selectedFiles, setSelectedFiles],
+  );
 
   const processEntry = useCallback(
     async (entry: FileSystemEntry): Promise<File[]> => {
@@ -87,26 +91,26 @@ export const FileUploader = () => {
 
       return [];
     },
-    [checkExifSupport],
+    [],
   );
 
   const handleFileChange = useCallback(
-    (e: Event) => {
-      const target = e.target as HTMLInputElement;
-      if (target.files) {
-        handleFiles(target.files);
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const files = e.target.files;
+      if (files) {
+        handleFiles(files);
       }
     },
     [handleFiles],
   );
 
-  const handleDragEnter = useCallback((e: DragEvent) => {
+  const handleDragEnter = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
     setIsDragging(true);
   }, []);
 
-  const handleDragLeave = useCallback((e: DragEvent) => {
+  const handleDragLeave = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
     const target = e.target as HTMLElement;
@@ -121,13 +125,13 @@ export const FileUploader = () => {
     setIsDragging(false);
   }, []);
 
-  const handleDragOver = useCallback((e: DragEvent) => {
+  const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
   }, []);
 
   const handleDrop = useCallback(
-    async (e: DragEvent) => {
+    async (e: React.DragEvent) => {
       e.preventDefault();
       e.stopPropagation();
       setIsDragging(false);
@@ -166,7 +170,7 @@ export const FileUploader = () => {
       onClick={handleClick}
     >
       <div
-        class={cn('transition-all p-8', !isUploaded && 'py-25')}
+        className={cn('transition-all p-8', !isUploaded && 'py-25')}
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
@@ -178,28 +182,30 @@ export const FileUploader = () => {
           accept="image/*"
           multiple
           onChange={handleFileChange}
-          class="hidden"
+          className="hidden"
         />
         <div>
-          <p class="mb-2 text-slate-600 text-balance break-keep">
-            이미지 파일이나 폴더를 여기에 끌어다 놓거나 클릭해 선택해 주세요
+          <p className="mb-2 text-slate-600 text-balance break-keep">
+            {t('fileUploader.dropzone')}
           </p>
-          <p class="mt-2 text-xs text-slate-500">
-            아직 지원하지 않는 파일 포맷이 있을 수 있어요.
+          <p className="mt-2 text-xs text-slate-500">
+            {t('fileUploader.notice.unsupportedFormat')}
             <br />
-            EXIF 데이터가 존재하지 않아도 분석이 어려워요.
+            {t('fileUploader.notice.exifRequired')}
           </p>
           {unsupportedExtensions.length > 0 && (
-            <p class="mt-2 text-xs text-amber-500 animate-fade-in">
-              아직 지원하지 않거나 데이터 추출에 실패한 포맷이 있습니다:
+            <p className="mt-2 text-xs text-amber-500 animate-fade-in">
+              {t('fileUploader.notice.unsupportedFiles')}
               <br />
               {unsupportedExtensions.join(', ')}
             </p>
           )}
-          <p class="mt-4 text-sm text-slate-500">
+          <p className="mt-4 text-sm text-slate-500">
             {isUploaded
-              ? `${selectedFiles.value.length}개의 파일이 선택됨`
-              : '선택된 파일 없음'}
+              ? t('fileUploader.notice.selectedFiles', {
+                  count: selectedFiles.length,
+                })
+              : t('fileUploader.notice.noFiles')}
           </p>
         </div>
       </div>

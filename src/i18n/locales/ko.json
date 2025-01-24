@@ -1,0 +1,65 @@
+{
+  "title": "Snap Scope",
+  "subtitle": "찰칵! 찰칵! 자주 사용하는 초점거리를 알려드려요",
+  "fileUploader": {
+    "dropzone": "이미지 파일이나 폴더를 여기에 끌어다 놓거나 클릭해 선택해 주세요",
+    "notice": {
+      "unsupportedFormat": "아직 지원하지 않는 파일 포맷이 있을 수 있어요.",
+      "exifRequired": "EXIF 데이터가 존재하지 않아도 분석이 어려워요.",
+      "unsupportedFiles": "아직 지원하지 않거나 데이터 추출에 실패한 포맷이 있습니다:",
+      "selectedFiles": "{{count}}개의 파일이 선택됨",
+      "noFiles": "선택된 파일 없음"
+    }
+  },
+  "analysis": {
+    "loading": "데이터를 분석하는 중...",
+    "noData": "분석 가능한 데이터가 없습니다",
+    "focalLengthDistribution": {
+      "title": "초점거리 분포",
+      "analyzedData": "분석한 데이터: {{count}}장",
+      "topDisplay": "(상위 {{count}}개 표시)",
+      "notice": "* 초점거리는 35mm 포맷 기준으로 환산된 값입니다"
+    },
+    "mostUsedFocalLength": {
+      "title": "가장 많이 사용한 초점거리"
+    },
+    "details": {
+      "title": "상세 데이터",
+      "total": "총 {{count}}개",
+      "noInfo": "정보 없음",
+      "usageCount": "{{count}}회 사용"
+    }
+  },
+  "chart": {
+    "axis": {
+      "focalLength": "초점거리 (mm)",
+      "photoCount": "촬영 수"
+    },
+    "tooltip": {
+      "photoCount": "장"
+    }
+  },
+  "export": {
+    "button": {
+      "default": "나만의 포토그래피 요약 이미지 만들기",
+      "processing": "이미지 만드는 중..."
+    },
+    "unit": "개",
+    "metrics": {
+      "analyzedPhotos": "분석한 이미지",
+      "discoveredFocalLengths": "발견된 초점거리"
+    }
+  },
+  "navigation": {
+    "returnHome": "처음으로 돌아가기"
+  },
+  "footer": {
+    "privacy": "모든 이미지 처리와 EXIF 데이터 분석은 사용자의 브라우저에서만 이루어집니다. 이미지와 이미지에서 추출하는 모든 데이터는 그 어떤 곳에도 전송하지 않습니다."
+  },
+  "language": {
+    "toggle": "View in English"
+  },
+  "units": {
+    "count": "개"
+  }
+}

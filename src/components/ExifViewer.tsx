@@ -1,31 +1,25 @@
+import { useFiles } from '../contexts/FileContext';
 import type { FocalLengthData } from '../types';
 import { cn } from '../utils/styles';
-import { selectedFiles } from './FileUploader';
 import { FocalLengthAreaChart } from './FocalLengthAreaChart';
 import { FocalLengthBarChart } from './FocalLengthBarChart';
 import { FocalLengthDetails } from './FocalLengthDetails';
 import { FocalLengthRanking } from './FocalLengthRanking';
 import { tryExportCard } from './export/tryExportCard';
 import { parse } from 'exifr';
-import { useEffect, useState, useMemo, useCallback } from 'preact/hooks';
+import { useEffect, useState, useMemo, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const ExifViewer = () => {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
-
-  if (isLoading) {
-    return (
-      <div class="text-center">
-        <div class="text-[15px] text-gray-600">데이터를 분석하는 중...</div>
-      </div>
-    );
-  }
-
   const [focalLengths, setFocalLengths] = useState<FocalLengthData[]>([]);
   const [isExporting, setIsExporting] = useState(false);
+  const { files: selectedFiles, setFiles: setSelectedFiles } = useFiles();
 
   useEffect(() => {
     const parseExifData = async () => {
-      if (selectedFiles.value.length === 0) {
+      if (selectedFiles.length === 0) {
         setFocalLengths([]);
         return;
       }
@@ -33,7 +27,7 @@ export const ExifViewer = () => {
       setIsLoading(true);
       const newData: FocalLengthData[] = [];
 
-      for (const file of selectedFiles.value) {
+      for (const file of selectedFiles) {
         try {
           const data = (await parse(file, {
             pick: ['FocalLengthIn35mmFormat'],
@@ -56,11 +50,7 @@ export const ExifViewer = () => {
     };
 
     parseExifData();
-  }, [selectedFiles.value]);
-
-  if (focalLengths.length === 0) {
-    return null;
-  }
+  }, [selectedFiles]);
 
   const chartData = useMemo(() => {
     const validData = focalLengths
@@ -102,25 +92,37 @@ export const ExifViewer = () => {
     } finally {
       setIsExporting(false);
     }
-  }, [setIsExporting, chartData, validDataCount]);
+  }, [chartData, validDataCount]);
 
   const returnToHome = useCallback(() => {
-    selectedFiles.value = [];
+    setSelectedFiles([]);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, []);
+  }, [setSelectedFiles]);
+
+  if (isLoading) {
+    return (
+      <div className="text-center">
+        <div className="text-[15px] text-gray-600">{t('analysis.loading')}</div>
+      </div>
+    );
+  }
+
+  if (focalLengths.length === 0) {
+    return null;
+  }
 
   return (
-    <div class="space-y-6">
+    <div className="space-y-6">
       <FocalLengthBarChart data={chartData} validDataCount={validDataCount} />
       <FocalLengthAreaChart data={chartData} validDataCount={validDataCount} />
       <FocalLengthRanking data={chartData} />
       <FocalLengthDetails data={focalLengths} validDataCount={validDataCount} />
 
-      <div class="text-center space-y-6">
+      <div className="text-center space-y-6">
         <button
           onClick={handleExport}
           disabled={!isExportable}
-          class={cn(
+          className={cn(
             'relative overflow-hidden rounded-full px-8 py-3 space-x-2 w-full',
             'text-white font-medium text-sm md:text-base',
             'transition-all duration-300',
@@ -130,16 +132,19 @@ export const ExifViewer = () => {
             isExportable && 'hover:brightness-80',
           )}
         >
-          <i class="i-solar-gallery-favourite-bold-duotone" />
+          <i className="i-solar-gallery-favourite-bold-duotone" />
           <span>
             {isExporting
-              ? '이미지 만드는 중...'
-              : '나만의 포토그래피 요약 이미지 만들기'}
+              ? t('export.button.processing')
+              : t('export.button.default')}
           </span>
         </button>
 
-        <button onClick={returnToHome} class="underline text-sm text-gray-600">
-          처음으로 돌아가기
+        <button
+          onClick={returnToHome}
+          className="underline text-sm text-gray-600"
+        >
+          {t('navigation.returnHome')}
         </button>
       </div>
     </div>

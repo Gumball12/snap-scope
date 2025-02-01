@@ -4,7 +4,7 @@
   "fileUploader": {
     "dropzone": "Drop image files or folders here, or click to select",
     "notice": {
-      "unsupportedFormat": "Some file formats may not be supported.",
+      "unsupportedFormat": "Some file formats may not be supported. JPEG format has the best compatibility.",
       "exifRequired": "EXIF data is required for image analysis.",
       "unsupportedFiles": "Unsupported formats or failed to extract data:",
       "selectedFiles": "{{count}} files selected",

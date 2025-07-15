@@ -1,7 +1,7 @@
+import { RANK_STYLES } from '../constants';
 import type { ChartData } from '../types';
 import { cn } from '../utils/styles';
 import { GlassCard } from './common/GlassCard';
-import { RANK_STYLES } from './export/ExportCard';
 import { useTranslation } from 'react-i18next';
 
 interface FocalLengthRankingProps {

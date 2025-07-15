@@ -220,7 +220,7 @@ const checkExifSupport = async (file: File): Promise<boolean> => {
     })) as { FocalLengthIn35mmFormat: number };
 
     return data?.FocalLengthIn35mmFormat !== undefined;
-  } catch (error) {
+  } catch {
     return false;
   }
 };

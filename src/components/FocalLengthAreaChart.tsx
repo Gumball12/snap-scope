@@ -21,7 +21,7 @@ const CustomTooltip = ({
   payload,
 }: {
   active?: boolean;
-  payload?: any[];
+  payload?: { payload: ChartData }[];
 }) => {
   const { t } = useTranslation();
   if (!active || !payload?.length) {
